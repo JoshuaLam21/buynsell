@@ -3,53 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>RogueStock — Roguelite Stock Simulator</title>
+  <title>RogueStock — Roguelite Stock Simulator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- ─── HEADER ─────────────────────────────────────── -->
+  <!-- HEADER -->
   <header class="game-header">
     <h1>📈 RogueStock</h1>
     <div id="seedInfo" class="seed-info">Seed&nbsp;#00000</div>
   </header>
 
-  <!-- ─── CONTROLS ──────────────────────────────────── -->
+  <!-- CONTROLS -->
   <section class="menu">
     <button id="btn-start" class="btn btn--primary">Start</button>
     <button id="btn-restart" class="btn btn--outline hidden">Restart</button>
     <button id="btn-share" class="btn btn--secondary hidden">🔗 Share Seed</button>
   </section>
 
-  <!-- ─── PRICE & PORTFOLIO ─────────────────────────── -->
+  <!-- PRICE & PORTFOLIO -->
   <main class="layout">
     <section class="price-board">
       <h2><span id="stockPrice">$100.00</span> <span id="priceChange" class="positive">+0.00</span></h2>
       <div class="pnl"><span id="priceArrow">—</span></div>
     </section>
-
     <section class="portfolio">
       <p>Cash  <span id="cashAmount">$0</span></p>
       <p>Shares <span id="positionAmount">0</span></p>
       <p>Total   <span id="totalAsset">$0</span></p>
       <p>P/L     <span id="pnlAmount" class="pnl-neutral">$0</span></p>
     </section>
-
-    <!-- ── Trading Buttons -->
     <section class="trade-btns">
-      <button id="buyButton"   class="btn btn--trading btn--buy">
-        <span class="btn-text">Buy</span><span class="btn-subtext">100 sh</span></button>
+      <button id="buyButton" class="btn btn--trading btn--buy">
+        <span class="btn-text">Buy</span><span class="btn-subtext">100 sh</span>
+      </button>
       <button id="shortButton" class="btn btn--trading btn--short">
-        <span class="btn-text">Short</span><span class="btn-subtext">100 sh</span></button>
+        <span class="btn-text">Short</span><span class="btn-subtext">100 sh</span>
+      </button>
     </section>
-
-    <!-- ── Random Events -->
     <section class="events">
       <h3>Random Events</h3>
       <div id="eventsContainer" class="scroll"></div>
     </section>
   </main>
 
-  <!-- ─── GAME OVER / META ─────────────────────────── -->
+  <!-- GAME OVER / META -->
   <div id="gameOverModal" class="modal hidden">
     <div class="modal-content">
       <h2>Game Over</h2>
