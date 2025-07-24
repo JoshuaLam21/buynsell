@@ -1,6 +1,6 @@
 # BuyNSell 多人股票遊戲 - 客戶端 JavaScript
 
-```javascript
+
 // ==================== 全局變量與配置 ====================
 let socket = null;
 let currentUser = {
@@ -556,4 +556,3 @@ if (typeof Chart === 'undefined') {
         this.draw();
     };
 }
-```
