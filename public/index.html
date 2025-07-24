@@ -1,133 +1,65 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BuyNSell 多人股票遊戲</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RogueStock — Roguelite Stock Simulator</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <!-- 遊戲標題與狀態 -->
-    <header class="game-header">
-        <div class="container">
-            <h1 class="game-title">📈 BuyNSell 多人股票遊戲</h1>
-            <div class="game-stats">
-                <div class="stat-item">
-                    <span class="stat-label">在線人數</span>
-                    <span id="onlineCount" class="stat-value">0</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">我的地區</span>
-                    <span id="userLocation" class="stat-value">檢測中...</span>
-                </div>
-            </div>
-        </div>
-    </header>
+  <!-- ─── HEADER ─────────────────────────────────────── -->
+  <header class="game-header">
+    <h1>📈 RogueStock</h1>
+    <div id="seedInfo" class="seed-info">Seed&nbsp;#00000</div>
+  </header>
 
-    <!-- 主要遊戲區域 -->
-    <main class="game-main">
-        <div class="container">
-            <div class="game-layout">
-                <!-- 左側：股價顯示與交易 -->
-                <section class="trading-section">
-                    <div class="price-card">
-                        <h2>當前股價</h2>
-                        <div class="price-display">
-                            <span id="currentPrice" class="price-value">100</span>
-                            <span class="price-unit">元</span>
-                        </div>
-                        <div id="priceChange" class="price-change">--</div>
-                        <!-- 價格圖表 -->
-                        <div class="chart-container">
-                            <canvas id="priceChart" width="400" height="200"></canvas>
-                        </div>
-                    </div>
-                    <!-- 交易按鈕 -->
-                    <div class="trading-buttons">
-                        <button id="buyBtn" class="trade-btn buy-btn">
-                            <span class="btn-text">📈 買入</span>
-                            <span class="btn-desc">看漲 +1</span>
-                        </button>
-                        <button id="sellBtn" class="trade-btn sell-btn">
-                            <span class="btn-text">📉 賣出</span>
-                            <span class="btn-desc">看跌 -1</span>
-                        </button>
-                    </div>
-                    <!-- 市場情緒 -->
-                    <div class="sentiment-section">
-                        <h3>市場情緒</h3>
-                        <div class="sentiment-bars">
-                            <div class="sentiment-bar bullish">
-                                <span class="bar-label">看漲 🚀</span>
-                                <div class="bar-fill" id="bullishBar"></div>
-                                <span id="bullishCount" class="bar-count">0</span>
-                            </div>
-                            <div class="sentiment-bar bearish">
-                                <span class="bar-label">看跌 📉</span>
-                                <div class="bar-fill" id="bearishBar"></div>
-                                <span id="bearishCount" class="bar-count">0</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+  <!-- ─── CONTROLS ──────────────────────────────────── -->
+  <section class="menu">
+    <button id="btn-start" class="btn btn--primary">Start</button>
+    <button id="btn-restart" class="btn btn--outline hidden">Restart</button>
+    <button id="btn-share" class="btn btn--secondary hidden">🔗 Share Seed</button>
+  </section>
 
-                <!-- 中間：最近交易 -->
-                <section class="trades-section">
-                    <div class="recent-trades">
-                        <h3>實時交易</h3>
-                        <div id="tradesList" class="trades-list">
-                            <div class="no-trades">等待交易中...</div>
-                        </div>
-                    </div>
-                    <!-- 廣告位 -->
-                    <div class="ad-space">
-                        <h4>🎯 廣告位</h4>
-                        <div class="ad-placeholder">
-                            <p>廣告內容位置</p>
-                            <small>支持我們的免費遊戲</small>
-                        </div>
-                    </div>
-                </section>
+  <!-- ─── PRICE & PORTFOLIO ─────────────────────────── -->
+  <main class="layout">
+    <section class="price-board">
+      <h2><span id="stockPrice">$100.00</span> <span id="priceChange" class="positive">+0.00</span></h2>
+      <div class="pnl"><span id="priceArrow">—</span></div>
+    </section>
 
-                <!-- 右側：排行榜 -->
-                <section class="leaderboard-section">
-                    <div class="leaderboard-tabs">
-                        <button id="globalTab" class="tab-btn active">全球排行</button>
-                        <button id="regionTab" class="tab-btn">地區排行</button>
-                    </div>
-                    <!-- 全球排行榜 -->
-                    <div id="globalLeaderboard" class="leaderboard-content active">
-                        <div id="globalList" class="ranking-list">
-                            <div class="loading">載入中...</div>
-                        </div>
-                    </div>
-                    <!-- 地區排行榜 -->
-                    <div id="regionLeaderboard" class="leaderboard-content">
-                        <div id="regionList" class="ranking-list">
-                            <div class="loading">載入中...</div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-    </main>
+    <section class="portfolio">
+      <p>Cash  <span id="cashAmount">$0</span></p>
+      <p>Shares <span id="positionAmount">0</span></p>
+      <p>Total   <span id="totalAsset">$0</span></p>
+      <p>P/L     <span id="pnlAmount" class="pnl-neutral">$0</span></p>
+    </section>
 
-    <!-- 用戶資訊顯示 -->
-    <div id="userInfo" class="user-info">
-        <span>玩家: <strong id="username">--</strong></span>
-        <span>積分: <strong id="userScore">0</strong></span>
-        <span>交易次數: <strong id="tradeCount">0</strong></span>
+    <!-- ── Trading Buttons -->
+    <section class="trade-btns">
+      <button id="buyButton"   class="btn btn--trading btn--buy">
+        <span class="btn-text">Buy</span><span class="btn-subtext">100 sh</span></button>
+      <button id="shortButton" class="btn btn--trading btn--short">
+        <span class="btn-text">Short</span><span class="btn-subtext">100 sh</span></button>
+    </section>
+
+    <!-- ── Random Events -->
+    <section class="events">
+      <h3>Random Events</h3>
+      <div id="eventsContainer" class="scroll"></div>
+    </section>
+  </main>
+
+  <!-- ─── GAME OVER / META ─────────────────────────── -->
+  <div id="gameOverModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Game Over</h2>
+      <p>Asset: <span id="finalAsset">$0</span></p>
+      <p>P/L:   <span id="finalPnL">$0</span></p>
+      <p>Meta-Coins Earned: <span id="metaEarn">0</span></p>
+      <button id="playAgainButton" class="btn btn--primary">Play Again</button>
     </div>
+  </div>
 
-    <!-- 連接狀態指示器 -->
-    <div id="connectionStatus" class="status-indicator disconnected">
-        <span class="status-dot"></span>
-        <span class="status-text">連接中...</span>
-    </div>
-
-    <!-- CDN資源，順序不能錯 -->
-    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="client.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
