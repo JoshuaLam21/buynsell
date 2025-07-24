@@ -1,6 +1,5 @@
 # BuyNSell 多人股票遊戲 - 後端伺服器
 
-```javascript
 const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
@@ -252,4 +251,3 @@ process.on('SIGTERM', () => {
     process.exit(0);
   });
 });
-```
