@@ -738,7 +738,6 @@ select.form-control {
 }
 
 /* END PERPLEXITY DESIGN SYSTEM */
-```css
 /* ==================== 基礎設定 ==================== */
 * {
     margin: 0;
@@ -1438,4 +1437,3 @@ body {
 .leaderboard-content::-webkit-scrollbar-thumb:hover {
     background: var(--color-border-secondary);
 }
-```
