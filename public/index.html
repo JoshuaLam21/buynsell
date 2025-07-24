@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BuyNSell 多人股票遊戲</title>
     <link rel="stylesheet" href="style.css">
-    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
     <!-- 遊戲標題與狀態 -->
@@ -29,7 +28,6 @@
     <main class="game-main">
         <div class="container">
             <div class="game-layout">
-                
                 <!-- 左側：股價顯示與交易 -->
                 <section class="trading-section">
                     <div class="price-card">
@@ -39,13 +37,11 @@
                             <span class="price-unit">元</span>
                         </div>
                         <div id="priceChange" class="price-change">--</div>
-                        
                         <!-- 價格圖表 -->
                         <div class="chart-container">
                             <canvas id="priceChart" width="400" height="200"></canvas>
                         </div>
                     </div>
-                    
                     <!-- 交易按鈕 -->
                     <div class="trading-buttons">
                         <button id="buyBtn" class="trade-btn buy-btn">
@@ -57,7 +53,6 @@
                             <span class="btn-desc">看跌 -1</span>
                         </button>
                     </div>
-                    
                     <!-- 市場情緒 -->
                     <div class="sentiment-section">
                         <h3>市場情緒</h3>
@@ -75,7 +70,7 @@
                         </div>
                     </div>
                 </section>
-                
+
                 <!-- 中間：最近交易 -->
                 <section class="trades-section">
                     <div class="recent-trades">
@@ -84,32 +79,28 @@
                             <div class="no-trades">等待交易中...</div>
                         </div>
                     </div>
-                    
                     <!-- 廣告位 -->
                     <div class="ad-space">
                         <h4>🎯 廣告位</h4>
                         <div class="ad-placeholder">
-                            <!-- 這裡將來可以放 Google AdSense 或其他廣告 -->
                             <p>廣告內容位置</p>
                             <small>支持我們的免費遊戲</small>
                         </div>
                     </div>
                 </section>
-                
+
                 <!-- 右側：排行榜 -->
                 <section class="leaderboard-section">
                     <div class="leaderboard-tabs">
                         <button id="globalTab" class="tab-btn active">全球排行</button>
                         <button id="regionTab" class="tab-btn">地區排行</button>
                     </div>
-                    
                     <!-- 全球排行榜 -->
                     <div id="globalLeaderboard" class="leaderboard-content active">
                         <div id="globalList" class="ranking-list">
                             <div class="loading">載入中...</div>
                         </div>
                     </div>
-                    
                     <!-- 地區排行榜 -->
                     <div id="regionLeaderboard" class="leaderboard-content">
                         <div id="regionList" class="ranking-list">
@@ -134,10 +125,9 @@
         <span class="status-text">連接中...</span>
     </div>
 
-    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script> <!-- 先加 socket.io CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>           <!-- Chart.js CDN -->
-
-    <!-- 載入客戶端 JavaScript -->
+    <!-- CDN資源，順序不能錯 -->
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="client.js"></script>
 </body>
 </html>
