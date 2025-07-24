@@ -199,7 +199,7 @@ class RogueStock {
   end(){
     clearInterval(this.gameT); clearInterval(this.priceT); clearInterval(this.newsT);
     this.state.playing=false;
-    const total=this.totalAsset(); const pnl=total-this.cfg.initCash;
+    const total=this.calcTotalAsset(); const pnl=total-this.cfg.initCash;
     const gain=Math.max(0, Math.floor(pnl/1000));
     this.meta.coins+=gain; localStorage.setItem("coins",this.meta.coins);
     this.$("finalAsset").textContent = `$${total.toFixed(0)}`;
@@ -226,7 +226,7 @@ class RogueStock {
     this.priceChange.className  = diff>0?"positive":diff<0?"negative":"";
   }
   refreshPortfolio(){
-    const pnl = this.calcPnL(), tot=this.totalAsset();
+    const pnl = this.calcPnL(), tot=this.calcTotalAsset();
     this.cashAmount.textContent   = `$${this.state.cash.toFixed(0)}`;
     this.positionAmount.textContent=this.state.shares;
     this.totalAsset.textContent   = `$${tot.toFixed(0)}`;
@@ -239,7 +239,7 @@ class RogueStock {
        return (this.state.price-this.state.posPrice)*this.state.shares;
     return (this.state.posPrice-this.state.price)*Math.abs(this.state.shares);
   }
-  totalAsset(){ 
+  calcTotalAsset(){ 
     return this.state.cash + this.calcPnL() + (this.state.shares>0?this.state.price*this.state.shares:0); 
   }
   refreshButtons(){
