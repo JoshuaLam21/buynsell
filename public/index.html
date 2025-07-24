@@ -1,0 +1,144 @@
+# BuyNSell 多人股票遊戲 - 前端頁面
+
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuyNSell 多人股票遊戲</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <!-- 遊戲標題與狀態 -->
+    <header class="game-header">
+        <div class="container">
+            <h1 class="game-title">📈 BuyNSell 多人股票遊戲</h1>
+            <div class="game-stats">
+                <div class="stat-item">
+                    <span class="stat-label">在線人數</span>
+                    <span id="onlineCount" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">我的地區</span>
+                    <span id="userLocation" class="stat-value">檢測中...</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要遊戲區域 -->
+    <main class="game-main">
+        <div class="container">
+            <div class="game-layout">
+                
+                <!-- 左側：股價顯示與交易 -->
+                <section class="trading-section">
+                    <div class="price-card">
+                        <h2>當前股價</h2>
+                        <div class="price-display">
+                            <span id="currentPrice" class="price-value">100</span>
+                            <span class="price-unit">元</span>
+                        </div>
+                        <div id="priceChange" class="price-change">--</div>
+                        
+                        <!-- 價格圖表 -->
+                        <div class="chart-container">
+                            <canvas id="priceChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- 交易按鈕 -->
+                    <div class="trading-buttons">
+                        <button id="buyBtn" class="trade-btn buy-btn">
+                            <span class="btn-text">📈 買入</span>
+                            <span class="btn-desc">看漲 +1</span>
+                        </button>
+                        <button id="sellBtn" class="trade-btn sell-btn">
+                            <span class="btn-text">📉 賣出</span>
+                            <span class="btn-desc">看跌 -1</span>
+                        </button>
+                    </div>
+                    
+                    <!-- 市場情緒 -->
+                    <div class="sentiment-section">
+                        <h3>市場情緒</h3>
+                        <div class="sentiment-bars">
+                            <div class="sentiment-bar bullish">
+                                <span class="bar-label">看漲 🚀</span>
+                                <div class="bar-fill" id="bullishBar"></div>
+                                <span id="bullishCount" class="bar-count">0</span>
+                            </div>
+                            <div class="sentiment-bar bearish">
+                                <span class="bar-label">看跌 📉</span>
+                                <div class="bar-fill" id="bearishBar"></div>
+                                <span id="bearishCount" class="bar-count">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 中間：最近交易 -->
+                <section class="trades-section">
+                    <div class="recent-trades">
+                        <h3>實時交易</h3>
+                        <div id="tradesList" class="trades-list">
+                            <div class="no-trades">等待交易中...</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 廣告位 -->
+                    <div class="ad-space">
+                        <h4>🎯 廣告位</h4>
+                        <div class="ad-placeholder">
+                            <!-- 這裡將來可以放 Google AdSense 或其他廣告 -->
+                            <p>廣告內容位置</p>
+                            <small>支持我們的免費遊戲</small>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 右側：排行榜 -->
+                <section class="leaderboard-section">
+                    <div class="leaderboard-tabs">
+                        <button id="globalTab" class="tab-btn active">全球排行</button>
+                        <button id="regionTab" class="tab-btn">地區排行</button>
+                    </div>
+                    
+                    <!-- 全球排行榜 -->
+                    <div id="globalLeaderboard" class="leaderboard-content active">
+                        <div id="globalList" class="ranking-list">
+                            <div class="loading">載入中...</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 地區排行榜 -->
+                    <div id="regionLeaderboard" class="leaderboard-content">
+                        <div id="regionList" class="ranking-list">
+                            <div class="loading">載入中...</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- 用戶資訊顯示 -->
+    <div id="userInfo" class="user-info">
+        <span>玩家: <strong id="username">--</strong></span>
+        <span>積分: <strong id="userScore">0</strong></span>
+        <span>交易次數: <strong id="tradeCount">0</strong></span>
+    </div>
+
+    <!-- 連接狀態指示器 -->
+    <div id="connectionStatus" class="status-indicator disconnected">
+        <span class="status-dot"></span>
+        <span class="status-text">連接中...</span>
+    </div>
+
+    <!-- 載入客戶端 JavaScript -->
+    <script src="client.js"></script>
+</body>
+</html>
+```
